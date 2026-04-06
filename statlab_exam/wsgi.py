@@ -1,4 +1,4 @@
-"""WSGI config for the StatLab Exam project."""
+"""WSGI config for the MatStat Exam project."""
 import os
 
 from django.core.wsgi import get_wsgi_application

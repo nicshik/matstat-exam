@@ -1,4 +1,4 @@
-"""Application URL routes for StatLab Exam."""
+"""Application URL routes for MatStat Exam."""
 from django.urls import path
 
 from statlab_exam import views

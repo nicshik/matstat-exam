@@ -1,1 +1,1 @@
-"""StatLab Exam Django project package."""
+"""MatStat Exam Django project package."""

@@ -1,4 +1,4 @@
-"""Root URL configuration for the StatLab Exam project."""
+"""Root URL configuration for the MatStat Exam project."""
 from django.urls import include, path
 
 

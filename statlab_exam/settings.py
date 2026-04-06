@@ -1,4 +1,4 @@
-"""Django settings for the StatLab Exam project."""
+"""Django settings for the MatStat Exam project."""
 import os
 from pathlib import Path
 

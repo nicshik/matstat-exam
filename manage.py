@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Command-line utility for the StatLab Exam project."""
+"""Command-line utility for the MatStat Exam project."""
 import os
 import sys
 

@@ -1,4 +1,4 @@
-"""Views for the StatLab Exam Django project."""
+"""Views for the MatStat Exam Django project."""
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST

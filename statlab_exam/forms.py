@@ -1,4 +1,4 @@
-"""Forms used by the StatLab Exam project."""
+"""Forms used by the MatStat Exam project."""
 from django import forms
 
 from statlab_exam import question_store, topic_content
