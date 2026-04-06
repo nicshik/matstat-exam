@@ -1,0 +1,57 @@
+{% extends "base_page.html" %}
+
+{% block title %}StatLab Exam | Результат{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+  <div>
+    <p class="section-kicker mb-2">Результат</p>
+    <h1 class="h2 mb-1">{{ quiz_mode }}</h1>
+    <p class="text-muted mb-0">Ниже показано, какие ответы были верными и где были ошибки.</p>
+  </div>
+  <a class="btn btn-outline-secondary" href="{% url 'topics' %}">К списку тем</a>
+</div>
+
+<section class="result-summary {% if percent >= 70 %}result-summary--success{% elif percent >= 50 %}result-summary--warning{% else %}result-summary--danger{% endif %} mb-4">
+  <div class="result-summary__score">{{ correct }}/{{ total }}</div>
+  <div>
+    <div class="h4 mb-1">Результат: {{ percent }}%</div>
+    {% if percent >= 70 %}
+      <div>Хороший результат. Можно переходить к общему экзамену.</div>
+    {% elif percent >= 50 %}
+      <div>Нормально, но некоторые темы стоит повторить.</div>
+    {% else %}
+      <div>Лучше ещё раз посмотреть теорию и пройти тест заново.</div>
+    {% endif %}
+  </div>
+</section>
+
+<section>
+  <h2 class="h4 mb-3">Разбор ответов</h2>
+  {% for item in results %}
+    <article class="section-card mb-3 {% if item.is_correct %}answer-card--correct{% else %}answer-card--wrong{% endif %}">
+      <div class="d-flex justify-content-between align-items-start gap-3 mb-2 flex-wrap">
+        <div class="fw-semibold">{{ forloop.counter }}. {{ item.question }}</div>
+        <span class="topic-badge">{{ item.topic_label }}</span>
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for option in item.options %}
+          <li class="list-group-item px-0
+            {% if forloop.counter0 == item.correct_answer %}text-success fw-semibold{% endif %}
+            {% if forloop.counter0 == item.user_answer and not item.is_correct %}text-danger{% endif %}">
+            {{ forloop.counter }}. {{ option }}
+            {% if forloop.counter0 == item.correct_answer %} — верный ответ{% endif %}
+            {% if forloop.counter0 == item.user_answer and not item.is_correct %} — выбран пользователем{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      <p class="small text-muted mb-0 mt-3">{{ item.explanation }}</p>
+    </article>
+  {% endfor %}
+</section>
+
+<div class="d-flex flex-wrap gap-2 mt-4">
+  <a class="btn btn-primary" href="{% url 'quiz_final' %}">Пройти экзамен ещё раз</a>
+  <a class="btn btn-outline-dark" href="{% url 'question_bank' %}">Посмотреть банк вопросов</a>
+</div>
+{% endblock %}

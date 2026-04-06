@@ -1,0 +1,99 @@
+{% extends "base_page.html" %}
+
+{% block title %}StatLab Exam | Главная{% endblock %}
+
+{% block content %}
+<section class="hero-panel mb-4 mb-lg-5">
+  <div class="row g-4 align-items-center">
+    <div class="col-lg-7">
+      <p class="section-kicker mb-2">Математическая статистика</p>
+      <h1 class="display-5 mb-3">Тренажёр по математической статистике</h1>
+      <p class="lead mb-4">
+        Здесь собраны основные темы по матстату: шкалы, меры центра, разброс и корреляция.
+        Можно открыть нужную тему или сразу пройти общий тест.
+      </p>
+      <div class="d-flex flex-wrap gap-3">
+        <a class="btn btn-primary btn-lg" href="{% url 'topics' %}">Перейти к темам</a>
+        <a class="btn btn-outline-dark btn-lg" href="{% url 'quiz_final' %}">Запустить итоговый экзамен</a>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="row g-3">
+        <div class="col-6">
+          <div class="stat-card h-100">
+            <div class="stat-card__value">{{ total_topics }}</div>
+            <div class="stat-card__label">темы</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="stat-card h-100">
+            <div class="stat-card__value">{{ total_questions }}</div>
+            <div class="stat-card__label">вопросов</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="stat-card h-100">
+            <div class="stat-card__value">{{ total_exam_questions }}</div>
+            <div class="stat-card__label">в экзамене</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="stat-card h-100">
+            <div class="stat-card__value">{{ total_attempts }}</div>
+            <div class="stat-card__label">тренировок</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="row g-4 mb-4">
+  <div class="col-lg-7">
+    <div class="section-card h-100">
+      <h2 class="h4 mb-3">Что есть в приложении</h2>
+      <ol class="mb-0 ps-3">
+        <li class="mb-2">Краткая теория по каждой теме.</li>
+        <li class="mb-2">Тесты по отдельным темам.</li>
+        <li class="mb-2">Общий экзамен по всем вопросам.</li>
+        <li>Страница со списком вопросов и их редактированием.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="section-card h-100">
+      <h2 class="h4 mb-3">Последний результат</h2>
+      {% if last_result %}
+        <p class="mb-2"><strong>{{ last_result.mode }}</strong></p>
+        <p class="mb-1">Верно: {{ last_result.correct }} из {{ last_result.total }}</p>
+        <p class="mb-0">Процент: {{ last_result.percent }}%</p>
+      {% else %}
+        <p class="mb-0 text-muted">Пока результатов нет. Можно начать с любой темы.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <h2 class="h4 mb-0">Темы для подготовки</h2>
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'question_bank' %}">Открыть банк вопросов</a>
+  </div>
+  <div class="row g-3">
+    {% for topic in topic_cards %}
+      <div class="col-md-6">
+        <article class="topic-panel h-100">
+          <h3 class="h5">{{ topic.label }}</h3>
+          <p class="text-muted mb-3">{{ topic.short_description }}</p>
+          <div class="small text-secondary mb-3">
+            <div>Вопросов: {{ topic.count }}</div>
+            <div>Попыток: {{ topic.attempts }}</div>
+            <div>Лучший результат: {{ topic.best_percent }}%</div>
+          </div>
+          <a class="btn btn-sm btn-primary" href="{% url 'topic_detail' topic.slug %}">Открыть тему</a>
+        </article>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

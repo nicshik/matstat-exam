@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}StatLab Exam{% endblock %}</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'index' %}">StatLab Exam</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="main-nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if '/topics/' in request.path %}active{% endif %}" href="{% url 'topics' %}">Темы</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if '/quiz/final/' in request.path %}active{% endif %}" href="{% url 'quiz_final' %}">Итоговый экзамен</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if '/questions/' in request.path %}active{% endif %}" href="{% url 'question_bank' %}">Банк вопросов</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4 py-lg-5">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="page-footer py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2 small">
+      <span>Тренажёр по математической статистике на Django.</span>
+      <span>Темы, тесты и вопросы для подготовки.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

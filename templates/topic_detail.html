@@ -1,0 +1,54 @@
+{% extends "base_page.html" %}
+
+{% block title %}StatLab Exam | {{ topic.label }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+  <div>
+    <p class="section-kicker mb-2">Тема</p>
+    <h1 class="h2 mb-2">{{ topic.label }}</h1>
+    <p class="lead mb-0">{{ topic.intro }}</p>
+  </div>
+  <a class="btn btn-outline-secondary" href="{% url 'topics' %}">Назад к темам</a>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <section class="section-card h-100">
+      <h2 class="h4 mb-3">Короткая теория</h2>
+      <ul class="mb-3">
+        {% for point in topic.theory_points %}
+          <li class="mb-2">{{ point }}</li>
+        {% endfor %}
+      </ul>
+      <p class="mb-0"><strong>Что важно для экзамена:</strong> {{ topic.exam_focus }}</p>
+    </section>
+  </div>
+  <div class="col-lg-5">
+    <section class="section-card h-100">
+      <h2 class="h4 mb-3">Практика</h2>
+      <p class="mb-2">Вопросов в теме: <strong>{{ questions_count }}</strong></p>
+      <p class="mb-2">Попыток пользователя: <strong>{{ attempts }}</strong></p>
+      <p class="mb-4">Лучший результат: <strong>{{ best_percent }}%</strong></p>
+      <a class="btn btn-primary w-100 mb-2" href="{% url 'quiz_topic' slug %}">Запустить тренировку</a>
+      <a class="btn btn-outline-dark w-100" href="{% url 'question_bank' %}?topic={{ slug }}">Открыть вопросы темы</a>
+    </section>
+  </div>
+</div>
+
+<section class="section-card mt-4">
+  <h2 class="h4 mb-3">Примеры вопросов</h2>
+  {% if sample_questions %}
+    <div class="list-group list-group-flush">
+      {% for item in sample_questions %}
+        <div class="list-group-item px-0">
+          <div class="fw-semibold mb-1">{{ forloop.counter }}. {{ item.question }}</div>
+          <div class="small text-muted">Вариантов ответа: {{ item.options|length }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="mb-0 text-muted">Пока вопросов нет. Их можно добавить через банк вопросов.</p>
+  {% endif %}
+</section>
+{% endblock %}

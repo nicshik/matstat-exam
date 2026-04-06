@@ -1,0 +1,44 @@
+{% extends "base_page.html" %}
+
+{% block title %}StatLab Exam | Темы{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+  <div>
+    <p class="section-kicker mb-2">Подготовка</p>
+    <h1 class="h2 mb-1">Темы для тренировки</h1>
+    <p class="text-muted mb-0">Можно отсортировать карточки по названию, числу вопросов или лучшему результату.</p>
+  </div>
+  <form method="get" class="filter-form">
+    <label class="form-label small text-uppercase mb-1" for="sort-select">Сортировка</label>
+    <select class="form-select" id="sort-select" name="sort" onchange="this.form.submit()">
+      <option value="name" {% if sort_mode == 'name' %}selected{% endif %}>По названию</option>
+      <option value="count" {% if sort_mode == 'count' %}selected{% endif %}>По числу вопросов</option>
+      <option value="progress" {% if sort_mode == 'progress' %}selected{% endif %}>По лучшему результату</option>
+    </select>
+  </form>
+</div>
+
+<div class="row g-4">
+  {% for topic in topics %}
+    <div class="col-md-6">
+      <article class="topic-panel h-100">
+        <div class="d-flex justify-content-between gap-3 mb-2">
+          <h2 class="h4 mb-0">{{ topic.label }}</h2>
+          <span class="topic-badge">{{ topic.best_percent }}%</span>
+        </div>
+        <p class="text-muted">{{ topic.short_description }}</p>
+        <div class="small text-secondary mb-3">
+          <div>Вопросов в теме: {{ topic.count }}</div>
+          <div>Попыток пользователя: {{ topic.attempts }}</div>
+          <div>Лучший процент: {{ topic.best_percent }}</div>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-primary" href="{% url 'topic_detail' topic.slug %}">Открыть тему</a>
+          <a class="btn btn-outline-dark" href="{% url 'quiz_topic' topic.slug %}">Пройти тест</a>
+        </div>
+      </article>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
