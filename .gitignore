@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+db.sqlite3
+.DS_Store
+.pytest_cache/
+.mypy_cache/
+.pylint.d/
+research_perplexity/
+Requirements.pdf
+Task_Разработка_веб-приложения_на_Django.md
